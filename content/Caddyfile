@@ -1,5 +1,5 @@
 http://:{$PORT} {
-    root * /root/html
+    root * /workdir/html
     file_server
     # http2 not support by heroku yet
     reverse_proxy /h2 127.0.0.1:8082 {
