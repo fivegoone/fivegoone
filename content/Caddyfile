@@ -1,43 +1,18 @@
-:{$PORT}{
-    root * /workdir/html
+http://:{$PORT} {
+    root * /root/html
+    file_server
+    # http2 not support by heroku yet
+    reverse_proxy /h2 127.0.0.1:8082 {
+        transport http {
+            versions h2c
+        }
     }
-@websockets-vl {
+
+    @websockets {
         header Connection *Upgrade*
         header Upgrade websocket
-        path /{$UUID}-vl*
-}
-handle @websockets-vl {
-        reverse_proxy * localhost:61079
-}
-@websockets-vm {
-        header Connection *Upgrade*
-        header Upgrade websocket
-        path /{$UUID}-vm*
-}
-handle @websockets-vm {
-        reverse_proxy * localhost:61080
-}
-@websockets-sh {
-        header Connection *Upgrade*
-        header Upgrade websocket
-        path /{$UUID}-sh*
-}
-handle @websockets-sh {
-        reverse_proxy * localhost:61081
-}
-@websockets-tr {
-        header Connection *Upgrade*
-        header Upgrade websocket
-        path /{$UUID}-tr*
-}
-handle @websockets-tr {
-        reverse_proxy * localhost:61082
-}
-@websockets-so {
-        header Connection *Upgrade*
-        header Upgrade websocket
-        path /{$UUID}-so*
-}
-handle @websockets-so {
-        reverse_proxy * localhost:52123
+    }
+    reverse_proxy @websockets localhost:8080
+
+
 }
