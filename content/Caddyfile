@@ -1,4 +1,6 @@
-:{$PORT}
+:{$PORT}{
+    root * /workdir/html
+    }
 @websockets-vl {
         header Connection *Upgrade*
         header Upgrade websocket
