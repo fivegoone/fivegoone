@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 COPY ./content /workdir/
-COPY html /workdir/
+COPY html /workdir/html/
 RUN apk add --no-cache curl runit caddy jq \
     && chmod +x /workdir/service/*/run /workdir/*.sh \
     && /workdir/install.sh \
